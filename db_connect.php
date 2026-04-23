@@ -4,11 +4,16 @@ $username = "root";
 $password = "";
 $dbname = "blog_database";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Turn off mysqli exceptions so we can handle errors manually
+mysqli_report(MYSQLI_REPORT_OFF);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Create connection
+$conn = @new mysqli($servername, $username, $password, $dbname);
+
+// Flag for connection status
+$db_connected = !$conn->connect_error;
+
+if (!$db_connected) {
+    error_log("DB connection failed: " . $conn->connect_error);
 }
 ?>

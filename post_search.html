@@ -4,10 +4,19 @@
     <title>Search Posts</title>
 </head>
 <body>
+    <nav>
+        <a href="index.php">Home</a> |
+        <a href="login.html">Login</a> |
+        <a href="get_posts.php">View Posts</a> |
+        <a href="insert_post.html">Create Post</a> |
+        <a href="post_search.html">Search Posts</a>
+    </nav>
+    <hr>
+
     <h1>Search Blog Posts</h1>
     <form action="post_search.php" method="get">
         <label for="keyword">Search Keyword:</label><br>
-        <input type="text" id="keyword" name="keyword"><br>
+        <input type="text" id="keyword" name="keyword" required><br>
         <input type="submit" value="Search">
     </form>
 </body>
