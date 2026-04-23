@@ -7,14 +7,7 @@ include 'db_connect.php';
     <title>Search Results</title>
 </head>
 <body>
-    <nav>
-        <a href="index.php">Home</a> |
-        <a href="login.html">Login</a> |
-        <a href="get_posts.php">View Posts</a> |
-        <a href="insert_post.html">Create Post</a> |
-        <a href="post_search.html">Search Posts</a>
-    </nav>
-    <hr>
+    <?php include 'nav.php'; ?>
 
     <h1>Search Results</h1>
 

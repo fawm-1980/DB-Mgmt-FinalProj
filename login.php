@@ -8,14 +8,7 @@ include 'db_connect.php';
     <title>Login Result</title>
 </head>
 <body>
-    <nav>
-        <a href="index.php">Home</a> |
-        <a href="login.html">Login</a> |
-        <a href="get_posts.php">View Posts</a> |
-        <a href="insert_post.html">Create Post</a> |
-        <a href="post_search.html">Search Posts</a>
-    </nav>
-    <hr>
+    <?php include 'nav.php'; ?>
 
     <h1>Login Result</h1>
 
@@ -49,7 +42,7 @@ if (!$db_connected) {
 
                 echo "<p>Login successful.</p>";
                 echo "<p>Welcome, <strong>" . htmlspecialchars($user['Username']) . "</strong>.</p>";
-                echo "<p><a href=\"insert_post.html\">Create a new post</a></p>";
+                echo "<p><a href=\"insert_post.php\">Create a new post</a></p>";
                 echo "<p><a href=\"index.php\">Return to home page</a></p>";
             } else {
                 echo "<p>Invalid username or password.</p>";

@@ -1,23 +1,24 @@
+<?php
+session_start();
+include 'nav.php';
+
+if (!isset($_SESSION['userid'], $_SESSION['username'])) {
+    echo "<p>Please log in to create a post.</p>";
+    echo "<p><a href='login_form.php'>Go to Login</a></p>";
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Add New Post</title>
 </head>
 <body>
-    <nav>
-        <a href="index.php">Home</a> |
-        <a href="login.html">Login</a> |
-        <a href="get_posts.php">View Posts</a> |
-        <a href="insert_post.html">Create Post</a> |
-        <a href="post_search.html">Search Posts</a>
-    </nav>
-    <hr>
-
     <h1>Add New Blog Post</h1>
-    <form action="insert_post.php" method="post">
-        <label for="userid">User ID:</label><br>
-        <input type="number" id="userid" name="userid" required><br>
 
+    <p><strong>Posting as:</strong> <?php echo htmlspecialchars($_SESSION['username']); ?></p>
+
+    <form action="insert_post.php" method="post">
         <label for="categoryid">Category:</label><br>
         <select id="categoryid" name="categoryid" required>
             <option value="">Select a category</option>
