@@ -28,7 +28,8 @@ if (!$db_connected) {
     $password = $_POST['password'];
 
     $stmt = $conn->prepare("
-        SELECT UserID, Username, PasswordHash, MFAEnabled
+        SELECT UserID, Username, PasswordHash, PasswordSet, MustResetPassword, MFAEnabled,
+            FailedLoginCount, LockedUntil
         FROM Users
         WHERE Username = ?
     ");
@@ -39,7 +40,16 @@ if (!$db_connected) {
         $result = $stmt->get_result();
 
         if ($result && $user = $result->fetch_assoc()) {
-        
+            if (
+                !empty($user['LockedUntil']) &&
+                strtotime($user['LockedUntil']) > time()
+            ) {
+                echo "<p>Account is temporarily locked. Please try again later.</p>";
+                $stmt->close();
+                $conn->close();
+                exit;
+            }
+
             if (empty($user['PasswordHash'])) {
                 session_regenerate_id(true);
                 
@@ -54,9 +64,27 @@ if (!$db_connected) {
 
                 session_regenerate_id(true);
 
+                $resetStmt = $conn->prepare("
+                    UPDATE Users
+                    SET FailedLoginCount = 0,
+                        LockedUntil = NULL
+                    WHERE UserID = ?
+                ");
+
+                if ($resetStmt) {
+                    $resetStmt->bind_param("i", $user['UserID']);
+                    $resetStmt->execute();
+                    $resetStmt->close();
+                }
+
                 $_SESSION['userid'] = $user['UserID'];
                 $_SESSION['username'] = $user['Username'];
-                $_SESSION['password_set'] = true;
+                $_SESSION['password_set'] = ((int)$user['PasswordSet'] === 1);
+                $_SESSION['mfa_verified'] = false;
+
+                if ((int)$user['MustResetPassword'] === 1 || (int)$user['PasswordSet'] !== 1) {
+                    redirect('reset_password_required_form.php');
+                }
 
                 // MFA handling (future)
                 if ((int)$user['MFAEnabled'] === 1) {
@@ -68,6 +96,23 @@ if (!$db_connected) {
                 }
 
             } else {
+                $failStmt = $conn->prepare("
+                    UPDATE Users
+                    SET FailedLoginCount = FailedLoginCount + 1,
+                        LockedUntil = CASE
+                            WHEN FailedLoginCount + 1 >= 5
+                            THEN DATE_ADD(NOW(), INTERVAL 15 MINUTE)
+                            ELSE LockedUntil
+                        END
+                    WHERE UserID = ?
+                ");
+
+                if ($failStmt) {
+                    $failStmt->bind_param("i", $user['UserID']);
+                    $failStmt->execute();
+                    $failStmt->close();
+                }
+
                 echo "<p>Invalid username or password.</p>";
             }
 

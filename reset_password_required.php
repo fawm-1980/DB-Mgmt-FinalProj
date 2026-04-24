@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/includes/security.php';
+require_login();
 include 'db_connect.php';
 
 require_post();
@@ -8,21 +9,19 @@ verify_csrf();
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Create Account Result</title>
+    <title>Password Reset Result</title>
 </head>
 <body>
 <?php include 'nav.php'; ?>
 
-<h1>Create Account Result</h1>
+<h1>Password Reset Result</h1>
 
 <?php
-$username = trim($_POST['username'] ?? '');
-$email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 $confirm = $_POST['confirm_password'] ?? '';
 
-if ($username === '' || $email === '' || $password === '' || $confirm === '') {
-    echo "<p>All fields are required.</p>";
+if ($password === '' || $confirm === '') {
+    echo "<p>Password and confirmation are required.</p>";
     exit;
 }
 
@@ -31,11 +30,11 @@ if ($password !== $confirm) {
     exit;
 }
 
-// Password policy check
 $errors = password_policy_errors($password);
+
 if (!empty($errors)) {
-    foreach ($errors as $e) {
-        echo "<p>" . escape_html($e) . "</p>";
+    foreach ($errors as $error) {
+        echo "<p>" . escape_html($error) . "</p>";
     }
     exit;
 }
@@ -45,27 +44,33 @@ if (!$db_connected) {
     exit;
 }
 
-// Hash password (bcrypt)
+$userID = (int) $_SESSION['userid'];
 $passwordHash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
 
 $stmt = $conn->prepare("
-    INSERT INTO Users
-    (Username, Email, PasswordHash, PasswordSet, MustResetPassword, IsActive, MFAEnabled)
-    VALUES (?, ?, ?, 1, 0, 1, 0)
+    UPDATE Users
+    SET PasswordHash = ?,
+        PasswordSet = 1,
+        MustResetPassword = 0,
+        UpdatedAt = NOW()
+    WHERE UserID = ?
 ");
 
 if ($stmt) {
-    $stmt->bind_param("sss", $username, $email, $passwordHash);
+    $stmt->bind_param("si", $passwordHash, $userID);
 
     if ($stmt->execute()) {
-        echo "<p>Account created successfully.</p>";
+        $_SESSION['password_set'] = true;
+
+        echo "<p>Password updated successfully.</p>";
+        echo "<p><a href=\"mfa_setup.php\">Continue to MFA setup</a></p>";
     } else {
-        echo "<p>Error creating account.</p>";
+        echo "<p>Error updating password.</p>";
     }
 
     $stmt->close();
 } else {
-    echo "<p>Error preparing request.</p>";
+    echo "<p>Error preparing password update.</p>";
 }
 
 $conn->close();

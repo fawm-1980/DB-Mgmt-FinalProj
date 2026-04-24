@@ -99,3 +99,15 @@ function require_post(): void {
         exit('Method not allowed.');
     }
 }
+
+function generate_backup_code(): string {
+    return strtoupper(bin2hex(random_bytes(5)));
+}
+
+function require_password_set(): void {
+    require_login();
+
+    if (empty($_SESSION['password_set'])) {
+        redirect('reset_password_required_form.php');
+    }
+}
