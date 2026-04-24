@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/includes/security.php';
 include 'db_connect.php';
 ?>
 <!DOCTYPE html>
@@ -28,9 +29,9 @@ if (!$db_connected) {
     if ($result && $result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             echo "<hr>";
-            echo "<h3>" . htmlspecialchars($row["Title"]) . "</h3>";
-            echo "<p><strong>Post ID:</strong> " . htmlspecialchars($row["PostID"]) . "</p>";
-            echo "<p>" . nl2br(htmlspecialchars($row["Content"])) . "</p>";
+            echo "<h3>" . escape_html($row["Title"]) . "</h3>";
+            echo "<p><strong>Post ID:</strong> " . escape_html((string)$row["PostID"]) . "</p>";
+            echo "<p>" . nl2br(escape_html($row["Content"])) . "</p>";
         }
     } else {
         echo "<p><em>No posts available.</em></p>";

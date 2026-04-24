@@ -1,6 +1,9 @@
 <?php
-session_start();
+require_once __DIR__ . '/includes/security.php';
+require_login();
 include 'db_connect.php';
+require_post();
+verify_csrf();
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,12 +31,6 @@ if (!$db_connected) {
     $categoryid = (int) $_POST['categoryid'];
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
-
-    if (!isset($_SESSION['userid'], $_SESSION['username'])) {
-        echo "<p>Please log in to create a post.</p>";
-        exit();
-    }
-
     $userid = (int) $_SESSION['userid'];
 
     $stmt = $conn->prepare("INSERT INTO BlogPosts (UserID, Title, Content, CategoryID) VALUES (?, ?, ?, ?)");
@@ -43,8 +40,8 @@ if (!$db_connected) {
 
         if ($stmt->execute()) {
             echo "<p>New post created successfully.</p>";
-            echo "<p><strong>Title:</strong> " . htmlspecialchars($title) . "</p>";
-            echo "<p><strong>Posted by:</strong> " . htmlspecialchars($_SESSION['username']) . "</p>";
+            echo "<p><strong>Title:</strong> " . escape_html($title) . "</p>";
+            echo "<p><strong>Posted by:</strong> " . escape_html($_SESSION['username']) . "</p>";
         } else {
             echo "<p>Error creating post.</p>";
         }

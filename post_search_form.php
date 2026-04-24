@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/includes/security.php';
 include 'nav.php';
 ?>
 <!DOCTYPE html>
@@ -8,7 +9,8 @@ include 'nav.php';
 </head>
 <body>
     <h1>Search Blog Posts</h1>
-    <form action="post_search.php" method="get">
+    <form action="post_search.php" method="post">
+        <?php echo csrf_field(); ?>
         <label for="keyword">Search Keyword:</label><br>
         <input type="text" id="keyword" name="keyword" required><br>
         <input type="submit" value="Search">

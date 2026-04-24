@@ -1,12 +1,7 @@
 <?php
-session_start();
+require_once __DIR__ . '/includes/security.php';
+require_login();
 include 'nav.php';
-
-if (!isset($_SESSION['userid'], $_SESSION['username'])) {
-    echo "<p>Please log in to create a post.</p>";
-    echo "<p><a href='login_form.php'>Go to Login</a></p>";
-    exit();
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,9 +11,10 @@ if (!isset($_SESSION['userid'], $_SESSION['username'])) {
 <body>
     <h1>Add New Blog Post</h1>
 
-    <p><strong>Posting as:</strong> <?php echo htmlspecialchars($_SESSION['username']); ?></p>
+    <p><strong>Posting as:</strong> <?php echo escape_html($_SESSION['username']); ?></p>
 
     <form action="insert_post.php" method="post">
+        <?php echo csrf_field(); ?>
         <label for="categoryid">Category:</label><br>
         <select id="categoryid" name="categoryid" required>
             <option value="">Select a category</option>

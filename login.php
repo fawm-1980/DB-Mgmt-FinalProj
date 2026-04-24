@@ -1,6 +1,8 @@
 <?php
-session_start();
+require_once __DIR__ . '/includes/security.php';
 include 'db_connect.php';
+require_post();
+verify_csrf();
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,7 +43,7 @@ if (!$db_connected) {
                 $_SESSION['username'] = $user['Username'];
 
                 echo "<p>Login successful.</p>";
-                echo "<p>Welcome, <strong>" . htmlspecialchars($user['Username']) . "</strong>.</p>";
+                echo "<p>Welcome, <strong>" . escape_html($user['Username']) . "</strong>.</p>";
                 echo "<p><a href=\"insert_post.php\">Create a new post</a></p>";
                 echo "<p><a href=\"index.php\">Return to home page</a></p>";
             } else {

@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/includes/security.php';
 include 'nav.php';
 ?>
 <!DOCTYPE html>
@@ -9,6 +10,7 @@ include 'nav.php';
 <body>
     <h1>User Login</h1>
     <form action="login.php" method="post">
+        <?php echo csrf_field(); ?>
         <label for="username">Username:</label><br>
         <input type="text" id="username" name="username" required><br>
 
