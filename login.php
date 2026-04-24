@@ -27,28 +27,50 @@ if (!$db_connected) {
     $username = trim($_POST['username']);
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT UserID, Username, Password FROM Users WHERE Username = ?");
+    $stmt = $conn->prepare("
+        SELECT UserID, Username, PasswordHash, MFAEnabled
+        FROM Users
+        WHERE Username = ?
+    ");
 
     if ($stmt) {
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        if ($result && $result->num_rows === 1) {
-            $user = $result->fetch_assoc();
-
-            if (!empty($user['Password']) && password_verify($password, $user['Password'])) {
+        if ($result && $user = $result->fetch_assoc()) {
+        
+            if (empty($user['PasswordHash'])) {
                 session_regenerate_id(true);
+                
                 $_SESSION['userid'] = $user['UserID'];
                 $_SESSION['username'] = $user['Username'];
+                $_SESSION['password_set'] = false;
+                $_SESSION['mfa_verified'] = false;
 
-                echo "<p>Login successful.</p>";
-                echo "<p>Welcome, <strong>" . escape_html($user['Username']) . "</strong>.</p>";
-                echo "<p><a href=\"insert_post.php\">Create a new post</a></p>";
-                echo "<p><a href=\"index.php\">Return to home page</a></p>";
+                redirect('account_setup_required.php');
+
+            } elseif (password_verify($password, $user['PasswordHash'])) {
+
+                session_regenerate_id(true);
+
+                $_SESSION['userid'] = $user['UserID'];
+                $_SESSION['username'] = $user['Username'];
+                $_SESSION['password_set'] = true;
+
+                // MFA handling (future)
+                if ((int)$user['MFAEnabled'] === 1) {
+                    $_SESSION['mfa_verified'] = false;
+                    redirect('mfa_verify.php');
+                } else {
+                    $_SESSION['mfa_verified'] = false;
+                    redirect('account_setup_required.php');
+                }
+
             } else {
                 echo "<p>Invalid username or password.</p>";
             }
+
         } else {
             echo "<p>Invalid username or password.</p>";
         }

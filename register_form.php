@@ -1,0 +1,31 @@
+<?php
+require_once __DIR__ . '/includes/security.php';
+include 'nav.php';
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Account</title>
+</head>
+<body>
+    <h1>Create Account</h1>
+
+    <form action="register.php" method="post">
+        <?php echo csrf_field(); ?>
+
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br>
+
+        <label for="confirm_password">Confirm Password:</label><br>
+        <input type="password" id="confirm_password" name="confirm_password" required><br>
+
+        <input type="submit" value="Create Account">
+    </form>
+</body>
+</html>

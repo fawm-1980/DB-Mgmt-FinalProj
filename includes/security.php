@@ -38,6 +38,37 @@ function require_login(): void {
     }
 }
 
+function require_fully_verified_user(): void {
+    require_login();
+
+    if (
+        empty($_SESSION['password_set']) ||
+        empty($_SESSION['mfa_verified'])
+    ) {
+        redirect('account_setup_required.php');
+    }
+}
+
+function password_policy_errors(string $password): array {
+    $errors = [];
+
+    if (strlen($password) < 12) {
+        $errors[] = 'Password must be at least 12 characters.';
+    }
+
+    $classes = 0;
+    $classes += preg_match('/[A-Z]/', $password) ? 1 : 0;
+    $classes += preg_match('/[a-z]/', $password) ? 1 : 0;
+    $classes += preg_match('/[0-9]/', $password) ? 1 : 0;
+    $classes += preg_match('/[^A-Za-z0-9]/', $password) ? 1 : 0;
+
+    if ($classes < 3) {
+        $errors[] = 'Password must include at least 3 of these: uppercase, lowercase, number, symbol.';
+    }
+
+    return $errors;
+}
+
 function csrf_token(): string {
     if (empty($_SESSION['csrf_token'])) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));

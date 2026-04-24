@@ -6,6 +6,7 @@ require_once __DIR__ . '/includes/security.php';
     <a href="get_posts.php">View Posts</a> |
     <a href="insert_post_form.php">Create Post</a> |
     <a href="post_search_form.php">Search Posts</a> |
+    <a href="register_form.php">Register</a> |
     <?php if (isset($_SESSION['username'])): ?>
         <span>Logged in as <?php echo escape_html($_SESSION['username']); ?></span> |
         <a href="logout.php">Logout</a>

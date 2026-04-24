@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/includes/security.php';
-require_login();
+require_fully_verified_user();
 include 'nav.php';
 ?>
 <!DOCTYPE html>
