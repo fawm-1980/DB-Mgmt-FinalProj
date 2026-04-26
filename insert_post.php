@@ -33,7 +33,7 @@ if (!$db_connected) {
     $content = trim($_POST['content']);
     $userid = (int) $_SESSION['userid'];
 
-    $stmt = $conn->prepare("INSERT INTO BlogPosts (UserID, Title, Content, CategoryID) VALUES (?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO BlogPosts (UserID, Title, PostContent, CategoryID) VALUES (?, ?, ?, ?)");
 
     if ($stmt) {
         $stmt->bind_param("issi", $userid, $title, $content, $categoryid);

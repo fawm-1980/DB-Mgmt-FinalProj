@@ -16,7 +16,7 @@ include 'db_connect.php';
 if (!$db_connected) {
     echo "<p><em>Server unavailable.</em></p>";
 } else {
-    $sql = "SELECT PostID, Title, Content FROM BlogPosts";
+    $sql = "SELECT PostID, Title, PostContent FROM BlogPosts";
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows > 0) {
@@ -24,7 +24,7 @@ if (!$db_connected) {
             echo "<hr>";
             echo "<h2>" . escape_html($row["Title"]) . "</h2>";
             echo "<p><strong>Post ID:</strong> " . escape_html((string)$row["PostID"]) . "</p>";
-            echo "<p>" . nl2br(escape_html($row["Content"])) . "</p>";
+            echo "<p>" . nl2br(escape_html($row["PostContent"])) . "</p>";
         }
     } else {
         echo "<p><em>No posts available.</em></p>";

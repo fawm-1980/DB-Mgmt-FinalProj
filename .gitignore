@@ -6,3 +6,6 @@ __pycache__
 secure_search.php
 dev_test_login.php
 generate_temp_password.php
+.vscode/
+blog_s006_backup.sql
+blog_s006_local.session.sql

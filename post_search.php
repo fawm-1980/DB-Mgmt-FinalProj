@@ -24,7 +24,7 @@ if (!$db_connected) {
         $keyword = trim($_POST['keyword']);
         $searchTerm = "%" . $keyword . "%";
 
-        $stmt = $conn->prepare("SELECT PostID, Title, Content FROM BlogPosts WHERE Title LIKE ? OR Content LIKE ?");
+        $stmt = $conn->prepare("SELECT PostID, Title, PostContent FROM BlogPosts WHERE Title LIKE ? OR PostContent LIKE ?");
 
         if ($stmt) {
             $stmt->bind_param("ss", $searchTerm, $searchTerm);
@@ -38,7 +38,7 @@ if (!$db_connected) {
                     echo "<hr>";
                     echo "<h2>" . escape_html($row["Title"]) . "</h2>"; 
                     echo "<p><strong>Post ID:</strong> " . escape_html((string)$row["PostID"]) . "</p>";
-                    echo "<p>" . nl2br(escape_html($row["Content"])) . "</p>";
+                    echo "<p>" . nl2br(escape_html($row["PostContent"])) . "</p>";
                 }
             } else {
                 echo "<p>No results found.</p>";
