@@ -29,7 +29,7 @@ if (!$db_connected) {
 
     $stmt = $conn->prepare("
         SELECT UserID, Username, PasswordHash, PasswordSet, MustResetPassword, MFAEnabled,
-            FailedLoginCount, LockedUntil
+            FailedLoginCount, LockedUntil, IsActive
         FROM Users
         WHERE Username = ?
     ");
@@ -45,6 +45,13 @@ if (!$db_connected) {
                 strtotime($user['LockedUntil']) > time()
             ) {
                 echo "<p>Account is temporarily locked. Please try again later.</p>";
+                $stmt->close();
+                $conn->close();
+                exit;
+            }
+
+            if ((int)$user['IsActive'] !== 1) {
+                echo "<p>Account is inactive.</p>";
                 $stmt->close();
                 $conn->close();
                 exit;

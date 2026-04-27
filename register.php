@@ -50,8 +50,8 @@ $passwordHash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
 
 $stmt = $conn->prepare("
     INSERT INTO Users
-    (Username, Email, PasswordHash, PasswordSet, MustResetPassword, IsActive, MFAEnabled)
-    VALUES (?, ?, ?, 1, 0, 1, 0)
+    (Username, Email, PasswordHash, PasswordSet, MustResetPassword, IsActive, MFAEnabled, RoleID)
+    VALUES (?, ?, ?, 1, 0, 1, 0, 1)
 ");
 
 if ($stmt) {
