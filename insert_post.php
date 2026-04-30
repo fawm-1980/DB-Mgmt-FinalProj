@@ -33,26 +33,78 @@ if (!$db_connected) {
     $content = trim($_POST['content']);
     $userid = (int) $_SESSION['userid'];
 
-    $stmt = $conn->prepare("INSERT INTO BlogPosts (UserID, Title, PostContent, CategoryID) VALUES (?, ?, ?, ?)");
+    $tagIds = $_POST['tag_ids'] ?? [];
 
-    if ($stmt) {
-        $stmt->bind_param("issi", $userid, $title, $content, $categoryid);
+    if (!is_array($tagIds)) {
+        $tagIds = [];
+    }
 
-        if ($stmt->execute()) {
-            echo "<p>New post created successfully.</p>";
-            echo "<p><strong>Title:</strong> " . escape_html($title) . "</p>";
-            echo "<p><strong>Posted by:</strong> " . escape_html($_SESSION['username']) . "</p>";
-        } else {
-            echo "<p>Error creating post.</p>";
+    $cleanTagIds = [];
+
+    foreach ($tagIds as $tagId) {
+        if (ctype_digit((string)$tagId)) {
+            $cleanTagIds[] = (int)$tagId;
+        }
+    }
+    $cleanTagIds = array_unique($cleanTagIds);
+
+    $conn->begin_transaction();
+
+    try {
+        $stmt = $conn->prepare("
+            INSERT INTO BlogPosts (UserID, Title, PostContent, CategoryID)
+            VALUES (?, ?, ?, ?)
+        ");
+
+        if (!$stmt) {
+            throw new Exception("Error preparing post insert.");
         }
 
+        $stmt->bind_param("issi", $userid, $title, $content, $categoryid);
+
+        if (!$stmt->execute()) {
+            throw new Exception("Error creating post.");
+        }
+
+        $postId = $conn->insert_id;
         $stmt->close();
-    } else {
-        echo "<p>Error preparing request.</p>";
+
+        if (!empty($cleanTagIds)) {
+            $tagStmt = $conn->prepare("
+                INSERT INTO PostTags (PostID, TagID)
+                VALUES (?, ?)
+            ");
+
+            if (!$tagStmt) {
+                throw new Exception("Error preparing tag insert.");
+            }
+
+            foreach ($cleanTagIds as $tagId) {
+                $tagStmt->bind_param("ii", $postId, $tagId);
+
+                if (!$tagStmt->execute()) {
+                    throw new Exception("Error adding tag to post.");
+                }
+            }
+
+            $tagStmt->close();
+        }
+
+        $conn->commit();
+
+        echo "<p>New post created successfully.</p>";
+        echo "<p><strong>Title:</strong> " . escape_html($title) . "</p>";
+        echo "<p><strong>Posted by:</strong> " . escape_html($_SESSION['username']) . "</p>";
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        error_log($e->getMessage());
+        echo "<p>Error creating post.</p>";
     }
 
     $conn->close();
 }
 ?>
+
 </body>
 </html>

@@ -2,7 +2,7 @@
 $servername = "127.0.0.1";
 $port = 3307;
 $username = "student_s006";
-$password = 'REPLACE_ME';
+$password = '4$GKFxG!@&R88%&2';
 $dbname = "blog_s006";
 
 // Turn off mysqli exceptions so we can handle errors manually

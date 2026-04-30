@@ -111,3 +111,16 @@ function require_password_set(): void {
         redirect('reset_password_required_form.php');
     }
 }
+
+function is_admin(): bool {
+    return isset($_SESSION['role_id']) && (int)$_SESSION['role_id'] === 2;
+}
+
+function require_admin_user(): void {
+    require_fully_verified_user();
+
+    if (!is_admin()) {
+        http_response_code(403);
+        exit('Access denied.');
+    }
+}

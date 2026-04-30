@@ -29,7 +29,7 @@ if (!$db_connected) {
 
     $stmt = $conn->prepare("
         SELECT UserID, Username, PasswordHash, PasswordSet, MustResetPassword, MFAEnabled,
-            FailedLoginCount, LockedUntil, IsActive
+            FailedLoginCount, LockedUntil, IsActive, RoleID
         FROM Users
         WHERE Username = ?
     ");
@@ -62,6 +62,7 @@ if (!$db_connected) {
                 
                 $_SESSION['userid'] = $user['UserID'];
                 $_SESSION['username'] = $user['Username'];
+                $_SESSION['role_id'] = (int)$user['RoleID'];
                 $_SESSION['password_set'] = false;
                 $_SESSION['mfa_verified'] = false;
 
@@ -86,6 +87,7 @@ if (!$db_connected) {
 
                 $_SESSION['userid'] = $user['UserID'];
                 $_SESSION['username'] = $user['Username'];
+                $_SESSION['role_id'] = (int)$user['RoleID'];
                 $_SESSION['password_set'] = ((int)$user['PasswordSet'] === 1);
                 $_SESSION['mfa_verified'] = false;
 
