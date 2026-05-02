@@ -9,6 +9,7 @@ verify_csrf();
 <html>
 <head>
     <title>Add New Post Result</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <?php include 'nav.php'; ?>
@@ -92,7 +93,7 @@ if (!$db_connected) {
 
         $conn->commit();
 
-        echo "<p>New post created successfully.</p>";
+        echo "<div id='toast' class='toast'>Post created successfully</div>";
         echo "<p><strong>Title:</strong> " . escape_html($title) . "</p>";
         echo "<p><strong>Posted by:</strong> " . escape_html($_SESSION['username']) . "</p>";
 
@@ -105,6 +106,6 @@ if (!$db_connected) {
     $conn->close();
 }
 ?>
-
+<script src="scripts.js"></script>
 </body>
 </html>

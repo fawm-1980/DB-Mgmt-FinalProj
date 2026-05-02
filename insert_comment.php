@@ -10,6 +10,7 @@ verify_csrf();
 <html>
 <head>
     <title>Add Comment Result</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <?php include 'nav.php'; ?>
@@ -55,7 +56,7 @@ if ($stmt) {
     $stmt->bind_param("iis", $userID, $postID, $comment);
 
     if ($stmt->execute()) {
-        echo "<p>Comment added successfully.</p>";
+        echo "<div id='toast' class='toast'>Comment added successfully</div>";
         echo "<p><a href=\"get_posts.php\">Return to posts</a></p>";
     } else {
         echo "<p>Error adding comment.</p>";
@@ -68,5 +69,6 @@ if ($stmt) {
 
 $conn->close();
 ?>
+<script src="scripts.js"></script>
 </body>
 </html>

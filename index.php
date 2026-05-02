@@ -6,6 +6,7 @@ include 'db_connect.php';
 <html>
 <head>
     <title>Blog Platform</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <?php include 'nav.php'; ?>

@@ -6,6 +6,7 @@ include 'db_connect.php';
 <html>
 <head>
     <title>All Blog Posts</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <?php include 'nav.php'; ?>
@@ -63,7 +64,7 @@ if (!$db_connected) {
             ? date("M d, Y H:i", strtotime($row["PostCreatedAt"]))
             : "Unknown";
 
-            echo "<hr>";
+            echo "<div class='post-card'>";
             echo "<h2>" . escape_html($row["Title"]) . "</h2>";
             echo "<p><strong>By:</strong> " . escape_html($row["Username"]) . 
                 " | <strong>Category:</strong> " . escape_html($row["CategoryName"]) . 
@@ -80,7 +81,11 @@ if (!$db_connected) {
                 }
 
                 if (!empty($tags)) {
-                    echo "<p><strong>Tags:</strong> " . implode(", ", $tags) . "</p>";
+                    echo "<div class='tags'>";
+                    foreach ($tags as $tag) {
+                        echo "<span class='tag-badge'>" . $tag . "</span> ";
+                    }
+                    echo "</div>";
                 }
             }
             echo "<p>" . nl2br(escape_html($row["PostContent"])) . "</p>";
@@ -113,6 +118,7 @@ if (!$db_connected) {
                 echo "<input type=\"submit\" value=\"Add Comment\">";
                 echo "</form>";
             }
+            echo "</div>";
         }
     } else {
         echo "<p><em>No posts available.</em></p>";

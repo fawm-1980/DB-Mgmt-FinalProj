@@ -8,6 +8,7 @@ include 'nav.php';
 <html>
 <head>
     <title>Add New Post</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Add New Blog Post</h1>

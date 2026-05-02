@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Manage Categories</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <?php include 'nav.php'; ?>

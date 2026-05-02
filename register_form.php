@@ -6,6 +6,7 @@ include 'nav.php';
 <html>
 <head>
     <title>Create Account</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Create Account</h1>

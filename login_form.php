@@ -6,6 +6,7 @@ include 'nav.php';
 <html>
 <head>
     <title>User Login</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>User Login</h1>

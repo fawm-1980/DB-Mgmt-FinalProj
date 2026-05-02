@@ -11,6 +11,7 @@ $selectedTagID = (int)($_GET['tag_id'] ?? 0);
 <html>
 <head>
     <title>Search Posts</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
