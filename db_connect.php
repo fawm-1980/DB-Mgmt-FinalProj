@@ -16,5 +16,7 @@ $db_connected = !$conn->connect_error;
 
 if (!$db_connected) {
     error_log("DB connection failed: " . $conn->connect_error);
+} else {
+    $conn->query("SET SESSION sql_safe_updates = 1");
 }
 ?>
