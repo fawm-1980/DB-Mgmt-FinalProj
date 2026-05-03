@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/includes/security.php';
 require_admin_user();
+require_fully_verified_user();
 require __DIR__ . '/db_connect.php';
 
 $message = '';

@@ -31,13 +31,26 @@ if (!$db_connected) {
     exit;
 }
 
-/*
-    Placeholder verification:
-    Real TOTP verification will be added later once we confirm Composer/library support.
-    For now, use 000000 as the temporary test code.
-*/
+$userID = (int) $_SESSION['userid'];
 
-if ($code === '000000') {
+$stmt = $conn->prepare("
+    SELECT MFASecret
+    FROM Users
+    WHERE UserID = ?
+");
+
+$stmt->bind_param("i", $userID);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+if (!$user || empty($user['MFASecret'])) {
+    echo "<p>MFA setup was not found. Please start setup again.</p>";
+    echo "<p><a href=\"mfa_setup.php\">Return to MFA setup</a></p>";
+    exit;
+}
+
+if (verify_totp_code($user['MFASecret'], $code)) {
     $userID = (int) $_SESSION['userid'];
 
     $stmt = $conn->prepare("
