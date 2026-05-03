@@ -237,3 +237,41 @@ form textarea[name="comment"] {
     opacity: 1;
     transform: translateY(0);
 }
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    input, button {
+        width: 100%;
+        font-size: 1rem;
+        margin-top: 10px;
+    }
+
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    #qrcode {
+        margin: 0 auto;
+        width: 180px !important;
+        height: 180px !important;
+    }
+
+    pre, code {
+        white-space: pre-wrap;
+        word-break: break-all;
+        font-size: 0.9rem;
+    }
+}
