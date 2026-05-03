@@ -145,6 +145,24 @@ form {
     margin-bottom: 18px;
 }
 
+form label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+form input,
+form textarea,
+form select {
+    display: block;
+    margin-bottom: 14px;
+}
+
+form button,
+form input[type="submit"] {
+    display: block;
+    margin-top: 10px;
+}
+
 input[type="text"],
 input[type="password"],
 input[type="email"],
