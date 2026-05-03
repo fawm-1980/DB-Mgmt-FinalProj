@@ -10,8 +10,9 @@ $selectedTagID = (int)($_GET['tag_id'] ?? 0);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Search Posts</title>
+    <title>Galactic Blog Terminal | Search</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="/favicon.ico">
 </head>
 
 <body>

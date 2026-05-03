@@ -7,7 +7,9 @@ verify_csrf();
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Result</title>
+    <title>Galactic Blog Terminal | Login Result</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="/favicon.ico">
 </head>
 <body>
     <?php include 'nav.php'; ?>

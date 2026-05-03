@@ -1,9 +1,5 @@
 <?php
-$servername = "127.0.0.1";
-$port = 3307;
-$username = "student_s006";
-$password = '4$GKFxG!@&R88%&2';
-$dbname = "blog_s006";
+require __DIR__ . '/db_config.php';
 
 // Turn off mysqli exceptions so we can handle errors manually
 mysqli_report(MYSQLI_REPORT_OFF);

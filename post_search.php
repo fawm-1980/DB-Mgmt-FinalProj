@@ -5,8 +5,9 @@ include 'db_connect.php';
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Search Results</title>
+    <title>Galactic Blog Terminal | Search Results</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="/favicon.ico">
 </head>
 <body>
     <?php include 'nav.php'; ?>

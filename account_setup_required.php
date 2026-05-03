@@ -6,7 +6,9 @@ include 'nav.php';
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Account Setup Required</title>
+    <title>Galactic Account Setup Required</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="/favicon.ico">
 </head>
 <body>
     <h1>Account Setup Required</h1>

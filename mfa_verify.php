@@ -6,7 +6,9 @@ include 'nav.php';
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MFA Verification</title>
+    <title>Galactic Blog Terminal | MFA Verification</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="/favicon.ico">
 </head>
 <body>
     <h1>Verify Multi-Factor Authentication</h1>

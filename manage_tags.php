@@ -34,8 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Manage Tags</title>
+    <title>Galactic Blog Terminal | Manage Tags</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="/favicon.ico">
 </head>
 <body>
 <?php include 'nav.php'; ?>

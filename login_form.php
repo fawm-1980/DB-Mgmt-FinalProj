@@ -5,8 +5,9 @@ include 'nav.php';
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Login</title>
+    <title>Galactic Blog Terminal | User Login</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="/favicon.ico">
 </head>
 <body>
     <h1>User Login</h1>

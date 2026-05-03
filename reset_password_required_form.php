@@ -6,7 +6,9 @@ include 'nav.php';
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Set Password</title>
+    <title>Galactic Blog Terminal | Set Password</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="/favicon.ico">
 </head>
 <body>
     <h1>Set Your Password</h1>

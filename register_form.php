@@ -5,8 +5,9 @@ include 'nav.php';
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Create Account</title>
+    <title>Galactic Blog Terminal | Create Account</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="/favicon.ico">
 </head>
 <body>
     <h1>Create Account</h1>

@@ -9,7 +9,9 @@ verify_csrf();
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Password Reset Result</title>
+    <title>Galactic Blog Terminal | Password Reset Result</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="/favicon.ico">
 </head>
 <body>
 <?php include 'nav.php'; ?>

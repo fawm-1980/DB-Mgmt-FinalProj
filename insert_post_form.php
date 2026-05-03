@@ -7,8 +7,9 @@ include 'nav.php';
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add New Post</title>
+    <title>Galactic Blog Terminal | Add Post</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="/favicon.ico">
 </head>
 <body>
     <h1>Add New Blog Post</h1>

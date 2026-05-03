@@ -9,3 +9,4 @@ generate_temp_password.php
 .vscode/
 blog_s006_backup.sql
 blog_s006_local.session.sql
+db_config.php
