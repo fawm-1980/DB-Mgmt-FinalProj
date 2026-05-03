@@ -13,6 +13,7 @@ $selectedTagID = (int)($_GET['tag_id'] ?? 0);
     <title>Galactic Blog Terminal | Search</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
