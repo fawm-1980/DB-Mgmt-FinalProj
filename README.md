@@ -1,227 +1,380 @@
-Test commit--DAG 22Apr2026
-
-# Implementing and Securing a Blogging Platform
-
-
-## AI Guidance
-I encourage you to use ChatGPT etc. for all aspects of this project EXCEPT for:
-- The database portion; you have to create the database on your own, normalize the data on your own, setup the tables on your own, etc.
-- The Security Writeup.  Don't get AI to write it for you.
-
-If you use AI on these portions, may you stub your toe on every door jam you come across for the rest of your life. Also I will find out and you will fail the assignment.
-
-
-## Objective: 
-This assignment is designed to help you understand the principles of database management, SQL querying, web application development, and the fundamentals of securing applications against common vulnerabilities.
-
-
-## Learning Outcomes:
-
-By the end of this project, you will be able to:
-
-- Design and implement a relational database using MySQL.
-- Develop a web interface using PHP to interact with the database.
-- Understand and apply basic security measures to protect a web application.
-- Identify and demonstrate SQL injection vulnerabilities and other security risks in web applications.
-
-
-## Project Description:
-
-You are tasked with creating a simple blogging platform using PHP and MySQL. This platform will include user authentication, posting blog entries, and a search functionality. The platform will be built on a Linux VM running Linux, Apache, MySQL, and PHP (LAMP stack).  Connection details will be provided later on.
+# 🌌 Galactic Blog Terminal  
+**Secure PHP + MySQL Blog Platform with Multi-Factor Authentication (MFA)**
 
 ---
 
-## Tasks:
+## 📌 Overview
 
+Galactic Blog Terminal is a full-stack blog platform built using **PHP and MySQL**, with a focus on:
 
-### Database Setup:
-**THIS IS A NO-AI-ZONE**
+- Secure authentication and authorization
+- Database design and normalization
+- Real-world deployment on a live server
+- Responsive UI for both desktop and mobile
 
-1. Analyze and normalize the provided dataset to at least the 2nd normal form.
-2. Create SQL scripts to generate the database schema including tables for users, posts, comments, etc.
-3. Populate the database with initial data.
-
-
-### Development of PHP Web Application:
-*AI FRIENDLY ZONE. WEAPONS FREE.*
-
-Implement PHP scripts for:
-1. User registration and login.
-2. Displaying all blog posts.
-3. Adding new blog posts.
-4. Searching for posts. 
-
-
-### Web Interface:
-*AI HIGHLY ENCOURAGED. GO GET EM.*
-1. Create simple HTML forms and pages that interact with your PHP scripts.
-2. Ensure forms are well structured and provide the necessary functionality for interacting with the database.
-
-
-### Security Analysis:
-**NO AI ALLOWED.**
-
-Examine the vulnerabilities in the provided PHP scripts, especially focusing on SQL injection.
-Document how these vulnerabilities can be exploited and propose measures to mitigate these risks.
+This project demonstrates how a traditional LAMP-style application can be hardened using modern security practices, including **Multi-Factor Authentication (MFA)**.
 
 ---
 
-## Deliverables:
-### Database Schema and Scripts:
-- SQL scripts for creating and populating database tables.
+## 🚀 Key Features
 
-### PHP Scripts:
-- Complete PHP scripts for handling user authentication, posting, and searching.
-
-### HTML Files:
-- HTML forms and pages for the functionalities implemented.
-
-### Security Report:
-- A detailed report that identifies vulnerabilities, describes potential exploits, and suggests mitigations.
-
-
-### **Submission Guidelines:**
-- Submit all your files in a compressed folder (.zip).
-- Include a README file detailing the structure of your project and instructions on how to set up and run your application.
-- Your security report should be submitted as a separate PDF document.
-
-
-### Evaluation Criteria:
-1. Functionality: How well does your application perform the required tasks?
-2. Database Design: Efficiency and normalization of the database.
-3. Code Quality: Clarity, use of best practices, and commenting.
-4. Security Awareness: Understanding and documentation of security vulnerabilities.
+### 📝 Core Functionality
+- User registration and login
+- Create, view, and search blog posts
+- Comment system
+- Category and tag management
+- Responsive UI (desktop + mobile)
 
 ---
 
-## Resources
+### 🔐 Security Features
+- Password hashing (`password_hash`, `password_verify`)
+- CSRF protection on all forms
+- XSS protection via output escaping
+- Session hardening (cookies, strict mode, SameSite)
+- Account lockout for repeated login attempts
+- Role-based access control (admin vs standard users)
+- Content Security Policy (CSP)
 
-### Using Your Linux Server
-Your server has the LAMP stack already implemented.  This is Linux, Apache, MySql and PHP.  You will be given a unique IP:Port combination for the following services on your server:
-- SSH
-- Web/Apache (HTTP only)
-- SQL
+---
 
-Log into your server via SSH at your specific IP:Port by opening a terminal and typing
-`ssh setup@IP -p Port`
+### 🔑 Multi-Factor Authentication (MFA)
+- Google Authenticator compatible
+- QR code onboarding (no manual typing required)
+- Base32 secret generation
+- 30-second rotating TOTP codes
+- ±1 time window tolerance
 
-You will need the specific IP, your port numbers, and the password.  I will give these to you in class or on Canvas, I don't want to post them publically on GitHub.
+---
 
+## 📂 Project Structure
 
-### Files
-You can access the files for this project one of the following ways:
-
-- The files are pre-loaded for you into `/var/www/html`
-- Or you can pull them from this repo `https://github.com/hendricksonja/Final-Project/`
-- Or you can clone the repo and work with the files that way.
-
-You will have to edit some of the files to make them work for you, such as `db_connect.php`, where you need to put in the correct database name and credentials to connect to your specific database.
-
-#### Remote File Access
-You can access the files on your server by using FTP over SSH (SFTP). Here is an article on how it works along with a screen shot of what it might look like:
-
-[https://www.digitalocean.com/community/tutorials/how-to-use-sftp-to-securely-transfer-files-with-a-remote-server]
-
-![image](https://github.com/user-attachments/assets/44972df2-62c1-4aa0-86e6-4842b95052b2)
-
-
-
-### Apache/Web
-HTTPS is outside the scope of this project.  To acquire an SSL certificate you need to have a domain name attached to your IP, plus you need to setup Apache Virtual Hosts and that is, again, outside the scope of this project.
-
-
-#### Change Default Web Page
-Your web server is currently serving the default Apache page. You need to change which page is the default by editing the dir.conf file:
 ```
-sudo nano /etc/apache2/mods-enabled/dir.conf
-```
-
-Ensure that whatever page you want to load when you go to your web site is the name of the first file here:
-```
-<IfModule mod_dir.c>
-    DirectoryIndex {YOUR_FILE_NAME}.html index.html index.cgi index.pl index.php index.xhtml index.htm
-</IfModule>
-```
-
-Then restart Apache:
-```
-sudo systemctl restart apache2
-```
-
-Check this link for more specifics: 
-[https://www.digitalocean.com/community/tutorials/how-to-install-lamp-stack-on-ubuntu#changing-apache-s-directory-index-optional]
-
-
-#### Other Apache Info 
-There are many other things you can do with Apache.  I recommend that you spool through the following documents to get an understanding of what's happening.  (I actually expect nearly all of you to skip these links, but if I write this here, then when you don't read the documents and come to me with questions, I can just point you right back to these links.  Sooner or later, you will probably click them.  Save us both some time and energy and just read them now.)
-
-
-**How to Install Apache** 
-
-[https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-22-04] 
-
-This is for your information so you understand where it installed and where the files are. 
-- NOTE: DO NOT do Step 1 and reinstall Apache, it is already installed for you.  
-- ALSO NOTE: DO NOT do Step 5 where it says to use Apache Virtual Hosts.  You DO NOT need to do that. 
-- OMG ANOTHER NOTE: Step 6 is the good stuff.  References to file locations etc. 
-
-
-**Installing LAMP Stack on Ubuntu**
-
-[https://www.digitalocean.com/community/tutorials/how-to-install-lamp-stack-on-ubuntu]
-
-Another INFORMATIONAL article.  You DO NOT NEED to install the LAMP stack because, guess what, it's already installed for you.  However, if something isn't working, this might be a good article to check and see what's up.
-
-
-### MySQL
-
-This is the point of this project.  Do some research and figure out how it works and how to implement your stuff.  Godspeed, soldier.
-
-(ok, fine, here is one link that could be helpful)
-[https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-22-04]
-
-NOTE: Guess what?  Don't do Step 1, MySQL is already installed.
-
-#### Remote MySQL Access
-If you want to allow an external application (like MySQL Workstation) to access your MySQL database, you need to open the port on the firewall"
-```
-sudo ufw allow 3306
+/var/www/html
+│
+├── index.php                # Homepage (recent posts)
+├── nav.php                  # Navigation bar (session-aware)
+├── db_connect.php           # DB connection wrapper
+├── db_config.php            # DB credentials (NOT in repo)
+│
+├── includes/
+│   └── security.php         # Security logic (CSRF, MFA, sessions)
+│
+├── js/
+│   ├── qrcode.min.js        # QR code library (local copy)
+│   └── mfa_qr.js            # QR rendering logic
+│
+├── styles.css               # Global + responsive styles
+│
+├── login_form.php
+├── login.php
+├── register_form.php
+├── register.php
+│
+├── insert_post_form.php
+├── insert_post.php
+├── get_posts.php
+├── insert_comment.php
+│
+├── post_search_form.php
+├── post_search.php
+│
+├── manage_categories.php
+├── manage_tags.php
+│
+├── mfa_setup.php
+├── mfa_verify.php
+├── mfa_verify_process.php
+├── mfa_reset.php (placeholder)
+│
+└── images/
 ```
 
-You will also need to use SSH tunnelling for MySQL:
+---
 
-MySQL Workbench:
+## ⚙️ Local Setup (Development)
 
-![image](https://github.com/user-attachments/assets/888b5d64-3bdd-4d75-9ccd-486c6793d4c9)
+### 1. Clone the Repository
 
+```bash
+git clone https://github.com/fawm-1980/DB-Mgmt-FinalProj.git
+cd DB-Mgmt-FinalProj
+```
 
-DBeaver:
+---
 
-<img width="718" alt="image" src="https://github.com/user-attachments/assets/4921d402-f5ad-4e80-9e1d-e9cf8f3acd29" />
+### 2. Configure Database Connection
 
-<img width="719" alt="image" src="https://github.com/user-attachments/assets/6ece4c4a-f8ca-40e0-b029-0d1934573545" />
+Create a file named:
 
+```
+db_config.php
+```
 
+Add your database credentials:
 
+```php
+<?php
+$DB_HOST = 'localhost';
+$DB_USER = 'your_user';
+$DB_PASS = 'your_password';
+$DB_NAME = 'BlogDB';
+```
 
+👉 This file is not included in the repo to protect sensitive credentials.
 
-### Firewall
-[https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-22-04#step-2-adjusting-the-firewall]
-NOTE: It's already enabled, just check to make sure the correct ports are open, etc.
+---
 
+### 3. Start Local Server
 
-### PHP
-While you technically do not need to make any substantial changes to your PHP scripts to make your website work, if you don't change anything you will get wrecked on the live-fire portion of this project.  Here's some tips:
-[https://www.w3schools.com/php/]
-[https://www.php.net/manual/en/tutorial.php]
+```bash
+php -S localhost:8000
+```
 
+Then open:
 
-### Security Info
-[https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu]
-I HIGHLY recommend that you do steps 2 and 3 and look at step 4.  You don't need to do step 1 because the 'setup' account is already a regular user and not root.  Step 5 isn't really necessary because we are using password authentication and not SSH keys.
+```
+http://localhost:8000
+```
 
-If you do not at least change the password of the 'setup' account, I will only say "I told you so" when one of your classmates SSHs into your server and pwns your entire database.
+---
 
+## 🌐 Deployment (Live Server)
 
-# Conclusion
-You're in college, figure it out. Good luck.
+This project is deployed to a Linux server using Apache.
+
+### SSH into server:
+
+```bash
+ssh setup@143.110.234.42 -p 22006
+```
+
+---
+
+### Navigate to project directory:
+
+```bash
+cd /var/www/html
+```
+
+---
+
+### Pull latest changes:
+
+```bash
+git pull
+```
+
+---
+
+### Fix permissions (if needed):
+
+```bash
+sudo chown -R setup:setup /var/www/html
+```
+
+---
+
+### Access live site:
+
+```
+http://143.110.234.42:8006/
+```
+
+---
+
+## 👤 How to Use the Application
+
+### 1. Register
+- Create a new account
+- Set a secure password
+
+---
+
+### 2. Login
+- Enter credentials
+- If MFA is enabled, you will be prompted for a code
+
+---
+
+### 3. Setup MFA
+- Navigate to MFA setup page
+- Scan QR code using Google Authenticator
+- Enter the generated 6-digit code
+
+---
+
+### 4. Create Content
+- Create blog posts
+- Add comments
+- Search posts using filters
+
+---
+
+## 🔐 Security Design
+
+### Authentication
+- Passwords stored securely using hashing
+- Verified using `password_verify()`
+
+---
+
+### MFA
+- Custom TOTP implementation
+- Compatible with standard authenticator apps
+- QR-based onboarding improves usability
+
+---
+
+### Input Protection
+- CSRF tokens required for all POST requests
+- Output escaped to prevent XSS
+
+---
+
+### Database Security
+- All queries use prepared statements
+- Foreign keys enforce data integrity
+
+---
+
+### Session Security
+- HttpOnly cookies
+- SameSite protection
+- Strict session mode
+
+---
+
+### Headers
+
+```
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'
+```
+
+---
+
+## 🏗️ Architecture
+
+The application follows a traditional 3-tier web architecture:
+
+### 1. Client Layer (Presentation)
+- Web browser (desktop or mobile)
+- Handles user interaction
+- Sends HTTP requests to server
+- Renders HTML/CSS/JS responses
+
+---
+
+### 2. Application Layer (Server / PHP)
+- Apache web server
+- PHP scripts handle:
+  - Authentication
+  - Session management
+  - MFA verification
+  - Business logic (posts, comments, search)
+- Security enforced via:
+  - CSRF validation
+  - Output escaping
+  - Prepared SQL statements
+
+---
+
+### 3. Data Layer (Database)
+- MySQL database
+- Stores:
+  - Users
+  - Blog posts
+  - Comments
+  - Categories & tags
+  - MFA secrets
+- Enforces:
+  - Foreign key relationships
+  - Data integrity
+
+---
+
+### 🔄 Request Flow Example
+
+1. User submits login form
+2. PHP validates credentials (`password_verify`)
+3. If MFA enabled → user prompted for TOTP code
+4. `verify_totp_code()` validates code
+5. Session is updated
+6. User gains access to protected pages
+
+---
+
+### 🔐 Security Flow
+
+- Input → validated + sanitized
+- Output → escaped (`escape_html`)
+- Queries → prepared statements
+- Requests → CSRF protected
+- Sessions → hardened
+- Access → role + MFA enforced
+
+---
+
+## ⚠️ Known Limitations
+
+- No UI for MFA reset (SQL required)
+- Backup codes not fully implemented
+- MFA secrets stored in plaintext
+- No HTTPS enforced (HTTP only)
+- No MFA rate limiting
+- Limited DB user privilege control
+
+---
+
+## 🧠 Development Notes
+
+- No Composer used (manual dependency management)
+- QR code library stored locally (no CDN dependency)
+- CSP enforced without inline scripts
+- Responsive UI implemented with CSS media queries
+
+---
+
+## 🔄 Git Workflow
+
+Local:
+
+```bash
+git add .
+git commit -m "message"
+git push
+```
+
+Server:
+
+```bash
+git pull
+```
+
+---
+
+## 📌 Summary
+
+This project demonstrates:
+
+- Secure full-stack PHP development
+- Multi-factor authentication without external libraries
+- Real-world deployment and debugging
+- Responsive UI design
+- Practical security hardening techniques
+
+---
+
+## 🏁 Final Notes
+
+This application is fully functional and deployed.  
+All major security features are implemented and tested.
+
+Future improvements could include:
+- MFA reset interface
+- Backup code support
+- HTTPS deployment
+- Admin management UI

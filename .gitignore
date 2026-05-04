@@ -10,3 +10,4 @@ generate_temp_password.php
 blog_s006_backup.sql
 blog_s006_local.session.sql
 db_config.php
+/old_files/*
